@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>INdex Two</title>
+    </head>
+    <body>
+        <h1>Retrieve data from DB when write in box</h1>
+        <input type="text" value="" id="input">
+        <button id = 'submit'>Submit here</button>
+        <div id = 'div1'></div>
+        <script>
+    
+            const btn = document.getElementById('submit');
+
+            //button click to submi and send data
+            btn.addEventListener("click", ()=>{
+                console.log('pressed');
+                const submitdata = document.getElementById('input').value;
+                const input0 = {'input' : submitdata}
+                senddata(input0);
+                console.log(input0);
+            });
+            const div = document.getElementById('div1');
+            //function for send and receive data
+            async function senddata(sendthis){
+            const options = {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'},
+                body: JSON.stringify(sendthis)}
+            const response = await fetch('/api2',options);
+            const data = await response.json();
+            console.log(data);
+            for (const item of data){
+            const para = document.createElement('p');
+            para.innerHTML = `latitude : ${item.lat}  <br> longi : ${item.long} <br>`
+            div1.append(para);
+            }
+        }
+
+        </script>
+    </body>
+</html>

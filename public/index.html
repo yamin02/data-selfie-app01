@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.min.js" integrity="sha512-P/Je1zlTfRugG4aRZRx9hYRVph2CkbpchkgP6ub1gNF/VNHDUNq0/WOY0CSLMmwEXxrQ7HohFmMenWGpx8ZzvQ==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js" integrity="sha512-hAm8hj9/2EIonvS+sf0G3anaY8zYHv6q7ktNlLTg8wLwFvhUavnDdH0gif8SA3U1kN0lyKBWbf1wD4+5BfaMMA==" crossorigin="anonymous"></script>
+        <link rel="shortcut icon" href="#">
+
+        <title>Input in DB</title>
+    </head>
+    <body>
+        <h1>Input in the DB</h1>
+        <a href="index.html">Enter data</a> | <a href="index3.html">See data</a>
+        <h2 id = 'head'></h2>
+        <p>Life is done</p>
+        <p>Latitude :<span id = 'lat'></span>&deg;</p>
+        <p>Longitude :<span id = 'lon'></span>&deg;</p>
+        <input type="text" id="input" value="">
+        <button id = 'butn'>Submit here</button>
+        <br>
+        <br>
+        <div></div>
+        <script>
+
+        function setup(){
+
+        noCanvas();
+        const video = createCapture(VIDEO);
+        // video.size(640,320);
+
+        const head = document.getElementById('head');
+        const butn = document.getElementById('butn'); 
+        //function to send the data 
+        async function takeresposnse(sendthis){
+           //options tell wheathe fetch is for post or get
+            const options = {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json'},
+                    body: JSON.stringify(sendthis)}
+        const response = await fetch('/api', options);
+        const json = await response.json();
+        console.log(json);
+        head.textContent = json.status + "  yes " + json.long;
+        }
+        let data, lat , long , time;
+        if('geolocation' in navigator) {
+            console.log('its available');
+            navigator.geolocation.getCurrentPosition((position) => {
+                lat = position.coords.latitude; 
+                long = position.coords.longitude;
+                // console.log(position);
+                time = Date.now();
+            
+                document.getElementById('lat').textContent = lat;
+                document.getElementById('lon').textContent = long;   
+        
+            });
+        } else {
+            console.log('NOT available');
+        }
+        butn.addEventListener('click' , event =>{
+        const  input = document.getElementById('input').value ;
+            console.log(input);
+            video.loadPixels();
+            const image64 = video.canvas.toDataURL();
+            data = {lat , long, time, input,image64};
+            console.log(data);
+            takeresposnse(data);
+
+    });
+        
+        }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="shortcut icon" href="#">
+        <title>Selfi APP</title>
+    </head>
+    <body>
+        <h1>Data selfi App</h1>
+        <a href="../index.html">Enter data</a> | <a href="/log">See data</a>
+        <div id = 'div1'></div>
+        <script>
+            const div = document.getElementById('div1');
+            show();
+            async function show(){
+                const respone = await fetch('/api');
+                const data = await respone.json();
+                for (const item of data){
+                const image = document.createElement('img');
+                image.src = item.image64;
+                const para = document.createElement('p');
+                para.innerHTML = `Personality :  ${item.input} <br>` ; 
+                if(item.image64){
+                div.append(para,image);}
+                }
+            }
+        </script>
+    </body>
+</html>

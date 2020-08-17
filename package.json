@@ -1,0 +1,20 @@
+{
+  "name": "yamin",
+  "version": "1.0.0",
+  "description": "its about me",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yamin",
+    "boy",
+    "us"
+  ],
+  "author": "yaminul hoque",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nedb": "^1.8.0"
+  }
+}
