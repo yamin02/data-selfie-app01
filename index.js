@@ -2,8 +2,9 @@ const express = require('express');
 const Datastore = require('nedb');
 
 const app = express();
+const port = process.env.PORT || 3000 ;
 //listen to local host 3000 and do the below
-app.listen(3000, () =>{
+app.listen(port, () =>{
     console.log('life is starting babes');
 });
 app.use(express.static('public'));
