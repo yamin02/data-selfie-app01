@@ -31,11 +31,7 @@ app.get('/api',(request,response) => {
             response.end();
         }else{
             response.json(data);
-    
         } 
-
-
-        
     });
     console.log(request.body);
 });
